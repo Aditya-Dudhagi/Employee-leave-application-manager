@@ -1,0 +1,127 @@
+.add-employee {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header {
+  margin-bottom: 28px;
+
+  .page-title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  .page-subtitle {
+    margin: 4px 0 0;
+    color: #888;
+    font-size: 15px;
+  }
+}
+
+.form-card {
+  border-radius: 16px !important;
+  padding: 32px !important;
+  max-width: 680px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+
+  .card-icon {
+    color: #7c4dff;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .card-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a2e;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.cancel-btn {
+  color: #888 !important;
+  font-weight: 500 !important;
+  border-radius: 10px !important;
+  padding: 8px 24px !important;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #7c4dff, #651fff) !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  padding: 8px 28px !important;
+  box-shadow: 0 4px 16px rgba(124, 77, 255, 0.3) !important;
+  transition: all 0.3s ease !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &:hover:not([disabled]) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(124, 77, 255, 0.4) !important;
+  }
+
+  &[disabled] {
+    opacity: 0.7;
+  }
+}
+
+.inline-spinner {
+  display: inline-block;
+}
+
+::ng-deep .snack-success {
+  background: #2e7d32 !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    padding: 20px !important;
+  }
+}

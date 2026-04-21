@@ -1,0 +1,113 @@
+<div class="dashboard">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Welcome back, {{ userName }}! 👋</h1>
+      <p class="page-subtitle">Here's your leave summary at a glance</p>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <mat-card class="stat-card total">
+      <div class="stat-icon-wrap">
+        <mat-icon>calendar_month</mat-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalLeaves }}</span>
+        <span class="stat-label">Total Leaves</span>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card taken">
+      <div class="stat-icon-wrap">
+        <mat-icon>event_busy</mat-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ leavesTaken }}</span>
+        <span class="stat-label">Leaves Taken</span>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card remaining">
+      <div class="stat-icon-wrap">
+        <mat-icon>event_available</mat-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ leavesRemaining }}</span>
+        <span class="stat-label">Remaining</span>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card pending">
+      <div class="stat-icon-wrap">
+        <mat-icon>hourglass_top</mat-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-value">{{ pendingCount }}</span>
+        <span class="stat-label">Pending</span>
+      </div>
+    </mat-card>
+  </div>
+
+  <mat-card class="recent-card">
+    <div class="section-header">
+      <h2 class="section-title">
+        <mat-icon>history</mat-icon>
+        Recent Leave Requests
+      </h2>
+      <a mat-button routerLink="/employee/my-leaves" class="view-all-btn">
+        View All
+        <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="recentLeaves" class="leaves-table" *ngIf="recentLeaves.length > 0">
+
+        <ng-container matColumnDef="dates">
+          <th mat-header-cell *matHeaderCellDef>Date Range</th>
+          <td mat-cell *matCellDef="let leave">
+            <div class="date-range">
+              <mat-icon class="date-icon">date_range</mat-icon>
+              {{ leave.fromDate }} — {{ leave.toDate }}
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="leaveType">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let leave">
+            <span class="type-chip" [class.half]="leave.leaveType === 'Half Day'">
+              {{ leave.leaveType }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reason">
+          <th mat-header-cell *matHeaderCellDef>Reason</th>
+          <td mat-cell *matCellDef="let leave">{{ leave.reason }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let leave">
+            <span class="status-badge"
+                  [class.status-pending]="leave.status === 'Pending'"
+                  [class.status-approved]="leave.status === 'Approved'"
+                  [class.status-rejected]="leave.status === 'Rejected'">
+              {{ leave.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['dates', 'leaveType', 'reason', 'status']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['dates', 'leaveType', 'reason', 'status']"></tr>
+      </table>
+    </div>
+
+    <div class="empty-state" *ngIf="recentLeaves.length === 0">
+      <mat-icon>inbox</mat-icon>
+      <p>No leave requests yet</p>
+      <a mat-raised-button routerLink="/employee/apply-leave" color="primary">Apply Leave</a>
+    </div>
+  </mat-card>
+</div>

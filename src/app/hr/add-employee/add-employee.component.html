@@ -1,0 +1,58 @@
+<div class="add-employee">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Add New Employee</h1>
+      <p class="page-subtitle">Fill in the details to register a new employee</p>
+    </div>
+  </div>
+
+  <mat-card class="form-card">
+    <div class="card-header">
+      <mat-icon class="card-icon">person_add</mat-icon>
+      <h2 class="card-title">Employee Details</h2>
+    </div>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="form-field full-width">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="name" placeholder="Enter employee name">
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="f['name'].hasError('required')">Name is required</mat-error>
+          <mat-error *ngIf="f['name'].hasError('minlength')">At least 2 characters required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="department">
+            <mat-option *ngFor="let dept of departments" [value]="dept">
+              {{ dept }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>business</mat-icon>
+          <mat-error *ngIf="f['department'].hasError('required')">Department is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Role / Designation</mat-label>
+          <input matInput formControlName="role" placeholder="e.g. Software Engineer">
+          <mat-icon matPrefix>work</mat-icon>
+          <mat-error *ngIf="f['role'].hasError('required')">Role is required</mat-error>
+          <mat-error *ngIf="f['role'].hasError('minlength')">At least 2 characters required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-button type="button" routerLink="/hr/employees" class="cancel-btn">
+          Cancel
+        </button>
+        <button mat-raised-button type="submit" class="submit-btn"
+                [disabled]="isSubmitting">
+          <mat-spinner *ngIf="isSubmitting" diameter="20" class="inline-spinner"></mat-spinner>
+          <mat-icon *ngIf="!isSubmitting">person_add</mat-icon>
+          {{ isSubmitting ? 'Adding...' : 'Add Employee' }}
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>

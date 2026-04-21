@@ -1,0 +1,69 @@
+<div class="login-container">
+  <div class="login-bg">
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+  </div>
+
+  <div class="login-card-wrapper" *ngIf="!isLoading">
+    <div class="login-brand">
+      <mat-icon class="brand-icon">event_available</mat-icon>
+      <h1>LeaveFlow</h1>
+      <p>Employee Leave Management System</p>
+    </div>
+
+    <mat-card class="login-card" elevation="8">
+      <mat-card-content>
+        <h2 class="login-title">Welcome Back</h2>
+        <p class="login-subtitle">Select your role to continue</p>
+
+        <div class="role-selector">
+          <div
+            class="role-card"
+            [class.selected]="selectedRole === 'employee'"
+            (click)="selectedRole = 'employee'"
+            matRipple>
+            <mat-icon>person</mat-icon>
+            <span>Employee</span>
+          </div>
+          <div
+            class="role-card"
+            [class.selected]="selectedRole === 'hr'"
+            (click)="selectedRole = 'hr'; selectedEmployee = ''"
+            matRipple>
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>HR / Manager</span>
+          </div>
+        </div>
+
+        <div class="employee-select" *ngIf="selectedRole === 'employee'">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Select Employee</mat-label>
+            <mat-select [(value)]="selectedEmployee">
+              <mat-option *ngFor="let emp of employees" [value]="emp.name">
+                {{ emp.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>badge</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-raised-button
+          class="login-btn"
+          [disabled]="!selectedRole || (selectedRole === 'employee' && !selectedEmployee)"
+          (click)="onLogin()">
+          <mat-icon>login</mat-icon>
+          Sign In
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <p class="login-footer">© 2026 LeaveFlow • Built with Angular</p>
+  </div>
+
+  <div class="loading-wrapper" *ngIf="isLoading">
+    <mat-spinner diameter="48" color="accent"></mat-spinner>
+    <p class="loading-text">Signing you in...</p>
+  </div>
+</div>

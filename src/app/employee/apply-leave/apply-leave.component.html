@@ -1,0 +1,70 @@
+<div class="apply-leave">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Apply for Leave</h1>
+      <p class="page-subtitle">Fill in the details below to submit your leave request</p>
+    </div>
+  </div>
+
+  <mat-card class="form-card">
+    <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <mat-form-field appearance="outline" class="form-field full-width">
+          <mat-label>Employee Name</mat-label>
+          <mat-select formControlName="employeeName">
+            <mat-option *ngFor="let name of employeeNames" [value]="name">
+              {{ name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f['employeeName'].hasError('required')">Employee name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>From Date</mat-label>
+          <input matInput [matDatepicker]="fromPicker" formControlName="fromDate" [min]="minDate">
+          <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromPicker></mat-datepicker>
+          <mat-error *ngIf="f['fromDate'].hasError('required')">From date is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>To Date</mat-label>
+          <input matInput [matDatepicker]="toPicker" formControlName="toDate" [min]="minDate">
+          <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+          <mat-error *ngIf="f['toDate'].hasError('required')">To date is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field full-width">
+          <mat-label>Leave Type</mat-label>
+          <mat-select formControlName="leaveType">
+            <mat-option value="Full Day">☀️ Full Day</mat-option>
+            <mat-option value="Half Day">🌤️ Half Day</mat-option>
+          </mat-select>
+          <mat-error *ngIf="f['leaveType'].hasError('required')">Leave type is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field full-width">
+          <mat-label>Reason for Leave</mat-label>
+          <textarea matInput formControlName="reason" rows="4"
+                    placeholder="Please describe the reason for your leave..."></textarea>
+          <mat-hint align="end">{{ f['reason'].value?.length || 0 }} characters</mat-hint>
+          <mat-error *ngIf="f['reason'].hasError('required')">Reason is required</mat-error>
+          <mat-error *ngIf="f['reason'].hasError('minlength')">At least 5 characters required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <button mat-button type="button" routerLink="/employee/dashboard" class="cancel-btn">
+          Cancel
+        </button>
+        <button mat-raised-button type="submit" class="submit-btn"
+                [disabled]="isSubmitting">
+          <mat-spinner *ngIf="isSubmitting" diameter="20" class="inline-spinner"></mat-spinner>
+          <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+          {{ isSubmitting ? 'Submitting...' : 'Submit Request' }}
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
